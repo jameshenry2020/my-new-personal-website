@@ -1,0 +1,125 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+}
+
+model Category {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  slug      String   @unique
+  posts     Post[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+}
+
+model Tag {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  slug      String   @unique
+  posts     Post[]   @relation("PostToTag")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+}
+
+model Post {
+  id          String     @id @default(uuid())
+  title       String
+  slug        String     @unique
+  content     String     @db.Text
+  coverImage  String?
+  published   Boolean    @default(false)
+  categoryId  String
+  category    Category   @relation(fields: [categoryId], references: [id])
+  tags        Tag[]      @relation("PostToTag")
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@index([slug])
+  @@index([categoryId])
+  @@index([published, createdAt])
+}
+
+model Project {
+  id           String   @id @default(uuid())
+  title        String
+  description  String   @db.Text
+  content      String?  @db.Text // Details (challenges, solutions, lessons)
+  technologies String[] // Native array of strings supported by PostgreSQL
+  githubUrl    String?
+  liveUrl      String?
+  coverImage   String?
+  screenshots  String[]
+  featured     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([featured, createdAt])
+}
+
+model Course {
+  id          String   @id @default(uuid())
+  title       String
+  description String   @db.Text
+  thumbnail   String?
+  playlistUrl String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([createdAt])
+}
+
+model Book {
+  id          String   @id @default(uuid())
+  title       String
+  description String   @db.Text
+  coverImage  String?
+  purchaseUrl String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  reviews     Review[]
+
+  @@index([createdAt])
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  bookId    String
+  book      Book     @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  author    String
+  rating    Int
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+
+  @@index([bookId])
+}
+
+model ContactMessage {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  subject   String
+  message   String   @db.Text
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([read, createdAt])
+}
