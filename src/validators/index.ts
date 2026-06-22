@@ -5,7 +5,7 @@ export const envSchema = z.object({
   DATABASE_URL: z.string().url(),
   AUTH_SECRET: z.string().min(8),
   NEXTAUTH_URL: z.string().url().default("http://localhost:3000"),
-  ADMIN_EMAIL: z.string().email().default("admin@henry.dev"),
+  ADMIN_EMAIL: z.string().email().default("admin@henrydev.online"),
   ADMIN_PASSWORD: z.string().min(8).default("HenrySecurePassword123!"),
   CLOUDINARY_CLOUD_NAME: z.string().optional(),
   CLOUDINARY_API_KEY: z.string().optional(),
@@ -34,6 +34,7 @@ export const projectSchema = z.object({
   coverImage: z.string().url().optional().or(z.literal("")),
   screenshots: z.array(z.string()).default([]),
   featured: z.boolean().default(false),
+  projectType: z.enum(["BACKEND_ONLY", "FULL_STACK", "MOBILE"]).default("FULL_STACK"),
 });
 
 // Course schema

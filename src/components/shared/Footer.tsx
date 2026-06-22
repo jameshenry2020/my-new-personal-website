@@ -71,7 +71,7 @@ export function Footer() {
           <div className="flex items-center gap-2">
             <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-[10px] font-mono text-muted-paper uppercase tracking-wider">
-              Available for architectural consulting
+              Available for systems design & consulting
             </span>
           </div>
           <div className="text-[10px] font-mono text-muted-paper uppercase tracking-wider">

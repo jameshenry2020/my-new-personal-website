@@ -5,6 +5,12 @@ import { deleteProject } from "@/actions/admin";
 import { ProjectForm } from "@/components/shared/ProjectForm";
 import { Edit, Trash2 } from "lucide-react";
 
+const typeLabels: Record<string, string> = {
+  FULL_STACK: "Full Stack",
+  BACKEND_ONLY: "Backend Only",
+  MOBILE: "Mobile",
+};
+
 export const dynamic = "force-dynamic";
 
 interface AdminProjectsPageProps {
@@ -59,8 +65,11 @@ export default async function AdminProjectsPage({ searchParams }: AdminProjectsP
                 >
                   <div className="flex justify-between items-start gap-4">
                     <div>
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center flex-wrap gap-2">
                         <span className="font-serif font-bold text-sm text-fg-ink">{proj.title}</span>
+                        <span className="font-mono text-[8px] bg-copper/10 text-copper px-1.5 py-0.2 uppercase border border-copper/20">
+                          {typeLabels[(proj as any).projectType] || "Full Stack"}
+                        </span>
                         {proj.featured && (
                           <span className="font-mono text-[8px] border border-copper text-copper px-1.5 py-0.2">
                             Featured

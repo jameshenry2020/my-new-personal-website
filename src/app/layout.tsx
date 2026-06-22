@@ -25,7 +25,7 @@ const mono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Henry A. | Software Engineer & Architect",
+    default: "Henry A. | Software Engineer & Systems Architect",
     template: "%s | Henry A.",
   },
   description:
@@ -45,15 +45,15 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://henry.dev",
-    title: "Henry A. | Software Engineer & Architect",
+    url: "https://henrydev.online",
+    title: "Henry A. | Software Engineer & Systems Architect",
     description:
       "Personal blog, portfolio, and content platform of Henry A., specializing in distributed systems and fintech.",
     siteName: "Henry A. Portfolio",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Henry A. | Software Engineer & Architect",
+    title: "Henry A. | Software Engineer & Systems Architect",
     description:
       "Personal blog, portfolio, and content platform of Henry A., specializing in distributed systems and fintech.",
     creator: "@henry_dev",

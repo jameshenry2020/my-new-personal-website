@@ -18,6 +18,7 @@ type ProjectFormValues = {
   liveUrl: string;
   coverImage: string;
   featured: boolean;
+  projectType: "BACKEND_ONLY" | "FULL_STACK" | "MOBILE";
 };
 
 interface ProjectFormProps {
@@ -28,6 +29,8 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
+  const [screenshots, setScreenshots] = useState<string[]>([]);
+  const [newScreenshotUrl, setNewScreenshotUrl] = useState("");
 
   const {
     register,
@@ -49,6 +52,7 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
       liveUrl: "",
       coverImage: "",
       featured: false,
+      projectType: "FULL_STACK",
     },
   });
 
@@ -64,7 +68,9 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
         liveUrl: initialData.liveUrl || "",
         coverImage: initialData.coverImage || "",
         featured: initialData.featured || false,
+        projectType: (initialData as any).projectType || "FULL_STACK",
       });
+      setScreenshots(initialData.screenshots || []);
     } else {
       reset({
         title: "",
@@ -75,7 +81,9 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
         liveUrl: "",
         coverImage: "",
         featured: false,
+        projectType: "FULL_STACK",
       });
+      setScreenshots([]);
     }
   }, [initialData, reset]);
 
@@ -97,7 +105,8 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
       liveUrl: data.liveUrl,
       coverImage: data.coverImage,
       featured: data.featured,
-      screenshots: [], // Optional
+      projectType: data.projectType,
+      screenshots: screenshots,
     };
 
     try {
@@ -113,6 +122,7 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
         router.refresh();
         if (!initialData) {
           reset();
+          setScreenshots([]);
         }
       } else {
         setError(res.message || "Failed to commit project changes.");
@@ -211,14 +221,72 @@ export function ProjectForm({ initialData }: ProjectFormProps) {
           />
         </div>
 
+        {/* Project Type */}
+        <div className="space-y-1.5">
+          <label className="meta-mono block">System Category / Type</label>
+          <select
+            {...register("projectType")}
+            className="w-full bg-bg-paper border border-border-paper px-3 py-2 text-xs font-mono rounded-none focus:outline-none focus:border-copper text-fg-ink"
+          >
+            <option value="FULL_STACK">Full Stack</option>
+            <option value="BACKEND_ONLY">Backend Only</option>
+            <option value="MOBILE">Mobile Application</option>
+          </select>
+          {errors.projectType && <p className="text-[10px] text-red-500 font-mono">{errors.projectType.message}</p>}
+        </div>
+
+        {/* Screenshots / Project Assets */}
+        <div className="space-y-2 border border-border-paper bg-bg-paper p-3">
+          <label className="meta-mono block text-xs">Project Screenshots / Interface Assets</label>
+          
+          {screenshots.length > 0 && (
+            <div className="space-y-2 max-h-40 overflow-y-auto border-b border-border-paper pb-3 mb-2">
+              {screenshots.map((url, idx) => (
+                <div key={idx} className="flex gap-2 items-center justify-between bg-card-paper p-2 border border-border-paper">
+                  <span className="text-[10px] font-mono truncate max-w-[80%]">{url}</span>
+                  <button
+                    type="button"
+                    onClick={() => setScreenshots(screenshots.filter((_, i) => i !== idx))}
+                    className="text-[10px] font-mono text-red-500 hover:text-red-700 uppercase"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+
+          <div className="flex gap-2">
+            <input
+              type="text"
+              placeholder="https://images.unsplash.com/... or asset url"
+              value={newScreenshotUrl}
+              onChange={(e) => setNewScreenshotUrl(e.target.value)}
+              className="flex-grow bg-card-paper border border-border-paper px-3 py-2 text-xs font-mono rounded-none focus:outline-none focus:border-copper text-fg-ink"
+            />
+            <button
+              type="button"
+              onClick={() => {
+                if (newScreenshotUrl.trim()) {
+                  setScreenshots([...screenshots, newScreenshotUrl.trim()]);
+                  setNewScreenshotUrl("");
+                }
+              }}
+              className="border border-fg-ink bg-fg-ink text-bg-paper px-4 py-2 text-xs font-mono hover:bg-copper hover:border-copper transition-colors"
+            >
+              Add Asset
+            </button>
+          </div>
+        </div>
+
         {/* Architectural Content Detail */}
         <div className="space-y-1.5">
-          <label className="meta-mono block">Architectural Details (Markdown / Plaintext)</label>
+          <label className="meta-mono block">System Architecture (Markdown / Plaintext)</label>
           <textarea
             {...register("content")}
             rows={3}
             className="w-full bg-bg-paper border border-border-paper px-3 py-2 text-xs font-mono rounded-none focus:outline-none focus:border-copper text-fg-ink"
-            placeholder="Provide deep architectural overview (challenges, lessons learned)..."
+            placeholder="Provide deep software/systems architecture overview (challenges, solutions, lessons)..."
           />
         </div>
 

@@ -83,6 +83,7 @@ async function main() {
       liveUrl: "https://github.com",
       coverImage: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&auto=format&fit=crop&q=80",
       featured: true,
+      projectType: "BACKEND_ONLY",
     },
   });
 
@@ -96,6 +97,7 @@ async function main() {
       liveUrl: "https://github.com",
       coverImage: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&auto=format&fit=crop&q=80",
       featured: true,
+      projectType: "BACKEND_ONLY",
     },
   });
 

@@ -136,7 +136,7 @@ export function ContactForm() {
             className={`w-full bg-card-paper border px-4 py-2.5 text-xs font-mono rounded-none focus:outline-none focus:border-copper text-fg-ink ${
               errors.subject ? "border-red-500" : "border-border-paper"
             }`}
-            placeholder="Architectural Consultation Inquiry"
+            placeholder="Software Architecture Consultation Inquiry"
             disabled={isPending}
           />
           {errors.subject && (

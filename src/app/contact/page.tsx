@@ -4,13 +4,13 @@ import { Mail, Github, Linkedin, Twitter, Youtube, Key } from "lucide-react";
 
 export const metadata = {
   title: "Contact & Coordinates",
-  description: "Initiate contact with Henry A. for consulting, speaking, or technical architectural review inquiries.",
+  description: "Initiate contact with Henry A. for consulting, speaking, or software architecture review inquiries.",
 };
 
 const SOCIAL_CHANNELS = [
   { icon: Github, label: "GitHub", href: "https://github.com", desc: "Open source repositories & ledgers" },
   { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com", desc: "Professional network chronology" },
-  { icon: Twitter, label: "X / Twitter", href: "https://twitter.com", desc: "Short-form architectural thoughts" },
+  { icon: Twitter, label: "X / Twitter", href: "https://twitter.com", desc: "Short-form software architecture thoughts" },
   { icon: Youtube, label: "YouTube", href: "https://youtube.com", desc: "Technical system design lecture series" },
 ];
 
@@ -38,11 +38,11 @@ export default function ContactPage() {
           <div className="space-y-4">
             <span className="meta-mono border-b border-border-paper pb-1.5 block">Direct Coordinate</span>
             <a
-              href="mailto:contact@henry.dev"
+              href="mailto:contact@henrydev.online"
               className="group flex items-center gap-3 text-xs font-mono hover:text-copper transition-colors"
             >
               <Mail size={14} className="text-muted-paper group-hover:text-copper" />
-              <span>contact@henry.dev</span>
+              <span>contact@henrydev.online</span>
             </a>
           </div>
 

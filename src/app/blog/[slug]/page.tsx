@@ -24,7 +24,7 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
     openGraph: {
       title: post.title,
       description: post.content.replace(/<[^>]*>/g, "").substring(0, 160) + "...",
-      url: `https://henry.dev/blog/${post.slug}`,
+      url: `https://henrydev.online/blog/${post.slug}`,
       type: "article",
       publishedTime: post.createdAt.toISOString(),
       modifiedTime: post.updatedAt.toISOString(),
@@ -69,7 +69,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     index++;
   }
 
-  const shareUrl = `https://henry.dev/blog/${post.slug}`;
+  const shareUrl = `https://henrydev.online/blog/${post.slug}`;
   const shareTitle = encodeURIComponent(post.title);
 
   return (

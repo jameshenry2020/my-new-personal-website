@@ -6,32 +6,38 @@ export const metadata = {
 };
 
 const SKILLS = [
-  { category: "Languages", items: ["Java", "Python", "Node.js (TypeScript)", "Go", "Rust", "SQL", "HTML/CSS"] },
+  { category: "Languages", items: ["Java", "Python", "Node.js (TypeScript)", "Go", "SQL", "HTML/CSS"] },
   { category: "Core Backend", items: ["NestJS", "Spring Boot", "Django", "gRPC", "REST APIs", "GraphQL", "Microservices"] },
-  { category: "Databases & Cache", items: ["PostgreSQL", "Prisma ORM", "Redis", "Elasticsearch", "Neo4j"] },
+  { category: "Databases & Cache", items: ["PostgreSQL", "Prisma ORM", "Redis", "Elasticsearch", "Neo4j", "Cassandra"] },
   { category: "Event Streaming", items: ["Kafka", "BullMQ", "RabbitMQ", "Event-Driven Architecture"] },
-  { category: "Infrastructure", items: ["Docker", "Docker Compose", "AWS (S3, EC2, ECS)", "Vercel", "Linux Systems"] },
-  { category: "Frontend Integration", items: ["Next.js (App Router)", "React", "Tailwind CSS", "Zustand", "React Query"] },
+  { category: "Infrastructure", items: ["Docker", "Docker Compose", "Kubernetes", "AWS (S3, EC2, ECS)", "DigitalOcean", "Linux Systems"] },
+  { category: "Frontend Integration", items: ["Next.js (App Router)", "React", "React Native", "Tailwind CSS", "Zustand", "React Query"] },
 ];
 
 const TIMELINE = [
   {
-    year: "2023 — Present",
-    role: "Principal Systems Architect",
-    company: "Apex Fintech Group",
-    desc: "Designed and implemented low-latency clearing gateways processing millions of transactions daily. Re-architected core messaging pipelines from RabbitMQ to Apache Kafka, reducing p99 processing latencies by 42%.",
+    year: "Jan 2025 — April 2026",
+    role: "Lead Software Engineer",
+    company: "ABX (AfrobasketXpress)",
+    desc: "Architected a multi-vendor e-commerce ecosystem from scratch. Engineered real-time delivery tracking using Django Channels and MQTT, automated vendor payouts with robust fund reconciliation, and optimized throughput using Celery + Redis.",
   },
   {
-    year: "2020 — 2023",
-    role: "Senior Software Engineer",
-    company: "Scribe SaaS Solutions",
-    desc: "Built a highly available multi-tenant billing engine using NestJS and Prisma. Guided migration from a monolith database to a partitioned PostgreSQL structure, supporting a 5x increase in system write loads.",
+    year: "Jan 2024 — Dec 2024",
+    role: "Lead Backend Engineer",
+    company: "XstakUp",
+    desc: "Directed the backend architecture for a multi-tenant SaaS platform with robust access control and data isolation. Established automated unit/integration test suites (reducing defects by 30%), optimized query performance, and mentored junior engineers.",
   },
   {
-    year: "2018 — 2020",
-    role: "Software Engineer",
-    company: "Velo E-Commerce",
-    desc: "Developed Spring Boot microservices for catalog and recommendation systems. Integrated Elasticsearch for lightning-fast search queries, scaling catalog search throughput to 10k RPS.",
+    year: "Jan 2023 — Dec 2023",
+    role: "Software Developer",
+    company: "DailyPayAfrica (Fintech)",
+    desc: "Developed core MVP REST APIs enabling secure financial transactions and real-time balance updates. Accelerated release cycles by 40% through modular service design and automated CI/CD pipelines.",
+  },
+  {
+    year: "Jan 2022 — Jun 2024",
+    role: "Backend Developer Instructor",
+    company: "Univelcity",
+    desc: "Designed and executed a comprehensive backend curriculum, successfully training 500+ aspiring engineers in Python and Node.js. Standardized DevOps training with Docker workflows and GitHub Actions.",
   },
 ];
 
@@ -64,7 +70,7 @@ export default function AboutPage() {
               </div>
               <div className="flex justify-between">
                 <span>Core Ecosystems:</span>
-                <span className="text-fg-ink">JVM, Node, Rust, Go</span>
+                <span className="text-fg-ink">JVM, Node, Python, Go</span>
               </div>
             </div>
           </div>
@@ -108,7 +114,7 @@ export default function AboutPage() {
           {/* Engineering Philosophy */}
           <div className="space-y-6 max-w-3xl">
             <h2 className="font-serif text-2xl md:text-3xl font-semibold italic text-fg-ink">
-              Architectural Philosophy
+              System Architecture Philosophy
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-xs font-sans leading-relaxed text-muted-paper">
               <div className="space-y-2">

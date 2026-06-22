@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export const dynamic = "force-dynamic";
 
 export async function GET() {
-  const baseUrl = "https://henry.dev";
+  const baseUrl = "https://henrydev.online";
 
   try {
     const posts = await db.post.findMany({

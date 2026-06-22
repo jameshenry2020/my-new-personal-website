@@ -286,7 +286,7 @@ export default async function HomePage() {
           Initiate a Technical Dialogue
         </h2>
         <p className="text-sm text-muted-paper max-w-lg mx-auto font-sans leading-relaxed">
-          Have an architectural challenge or looking for consulting on distributed databases? Reach out via the contact form or view social coordinates.
+          Have a software architecture challenge or looking for consulting on distributed systems? Reach out via the contact form or view social coordinates.
         </p>
         <div className="pt-4">
           <Link

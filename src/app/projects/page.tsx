@@ -4,6 +4,12 @@ import { getProjects } from "@/services/db.service";
 import { ProjectFilters } from "@/components/shared/ProjectFilters";
 import { Github, ExternalLink } from "lucide-react";
 
+const typeLabels: Record<string, string> = {
+  FULL_STACK: "Full Stack",
+  BACKEND_ONLY: "Backend Only",
+  MOBILE: "Mobile",
+};
+
 export const revalidate = 60; // Cache projects list page for 1 minute
 
 interface ProjectsPageProps {
@@ -58,7 +64,7 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
           </span>
         </div>
         <p className="text-xs text-muted-paper max-w-xl font-sans leading-relaxed">
-          Explore architectural designs, code repositories, and running deployments. Use search filters below to navigate by technology stack.
+          Explore software architectures, system designs, code repositories, and running deployments. Use search filters below to navigate by technology stack.
         </p>
       </section>
 
@@ -82,7 +88,7 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
               <div key={project.id} className="py-12 grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
                 {/* Index & Stack (Left panel) */}
                 <div className="md:col-span-3 space-y-4">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center flex-wrap gap-2">
                     <span className="font-mono text-xs text-copper font-semibold">
                       SYSTEM [{idx + 1 < 10 ? `0${idx + 1}` : idx + 1}]
                     </span>
@@ -91,6 +97,9 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
                         Featured
                       </span>
                     )}
+                    <span className="font-mono text-[9px] bg-copper/10 text-copper px-1.5 py-0.2 uppercase border border-copper/20">
+                      {typeLabels[(project as any).projectType] || "Full Stack"}
+                    </span>
                   </div>
                   <div className="flex flex-wrap gap-1.5 pt-2">
                     {project.technologies.map((tech) => (
@@ -114,8 +123,34 @@ export default async function ProjectsPage({ searchParams }: ProjectsPageProps) 
                   </p>
                   {project.content && (
                     <div className="text-xs text-muted-paper border-l border-border-paper pl-4 italic space-y-1">
-                      <span className="font-mono text-[9px] not-italic block uppercase text-copper">Architectural Detail</span>
+                      <span className="font-mono text-[9px] not-italic block uppercase text-copper">System Architecture</span>
                       <p>{project.content}</p>
+                    </div>
+                  )}
+                  {project.screenshots && project.screenshots.length > 0 && (
+                    <div className="space-y-2 pt-2">
+                      <span className="font-mono text-[9px] block uppercase text-copper">Project Assets & Interfaces</span>
+                      <div className={`grid gap-2 ${
+                        (project as any).projectType === "MOBILE" 
+                          ? "grid-cols-3 sm:grid-cols-4" 
+                          : "grid-cols-2 sm:grid-cols-3"
+                      }`}>
+                        {project.screenshots.map((screenshot, sIdx) => (
+                          <div 
+                            key={sIdx} 
+                            className={`border border-border-paper overflow-hidden bg-card-paper hover:border-copper transition-colors ${
+                              (project as any).projectType === "MOBILE" ? "aspect-[9/16]" : "aspect-video"
+                            }`}
+                          >
+                            {/* eslint-disable-next-line @next/next/no-img-element */}
+                            <img
+                              src={screenshot}
+                              alt={`${project.title} asset ${sIdx + 1}`}
+                              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                            />
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
                 </div>

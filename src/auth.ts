@@ -19,7 +19,7 @@ import NextAuth from "next-auth";
             const { email, password } = parsedCredentials.data;
             
             // Check against configured admin in environment variables
-            const adminEmail = process.env.ADMIN_EMAIL || "admin@henry.dev";
+            const adminEmail = process.env.ADMIN_EMAIL || "admin@henrydev.online";
             const adminPassword = process.env.ADMIN_PASSWORD || "HenrySecurePassword123!";
 
             if (email === adminEmail && password === adminPassword) {

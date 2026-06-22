@@ -71,7 +71,7 @@ function LoginForm() {
             onChange={(e) => setEmail(e.target.value)}
             required
             className="w-full bg-bg-paper border border-border-paper px-4 py-2.5 text-xs font-mono rounded-none focus:outline-none focus:border-copper text-fg-ink"
-            placeholder="admin@henry.dev"
+            placeholder="admin@henrydev.online"
             disabled={isPending}
           />
         </div>

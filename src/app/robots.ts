@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/admin/", "/login/"],
     },
-    sitemap: "https://henry.dev/sitemap.xml",
+    sitemap: "https://henrydev.online/sitemap.xml",
   };
 }

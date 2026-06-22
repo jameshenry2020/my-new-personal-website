@@ -57,7 +57,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           </span>
         </div>
         <p className="text-xs text-muted-paper max-w-xl font-sans leading-relaxed">
-          Thoughtful monographs and architectural breakdowns of complex backend infrastructure systems. Written for software engineers.
+          Thoughtful monographs and technical breakdowns of complex backend infrastructure systems. Written for software engineers.
         </p>
       </section>
 
