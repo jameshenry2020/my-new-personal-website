@@ -28,15 +28,15 @@ export default async function HomePage() {
             </p>
           </div>
           <div className="text-xs text-muted-paper space-y-1 font-mono">
-            <div>Focus: Scalable Backends, Fintech</div>
-            <div>Location: London, UK / Remote</div>
+            <div>Focus: Scalable Backends, Mobile & AI Systems</div>
+            <div>Location: Lagos, Nigeria / Remote</div>
           </div>
         </div>
 
         {/* Right Column: Large Introduction Statement */}
         <div className="flex flex-col justify-between">
-          <p className="font-serif text-xl md:text-3xl font-light text-fg-ink/90 leading-relaxed max-w-3xl">
-            Software Engineer specializing in distributed systems, event-driven architectures, and scalable backend platforms. I build production-grade software across Fintech, E-commerce, and SaaS.
+          <p className="font-serif text-xl md:text-2xl font-light text-fg-ink/90 leading-relaxed max-w-3xl">
+            Software Engineer specializing in distributed systems, event-driven architectures,test driven development, mobile development, AI systems and scalable backend engineering. I build production-grade software across Fintech, E-commerce, Logistics and SaaS.
           </p>
           <div className="mt-8 md:mt-16 flex flex-wrap gap-4 text-xs font-mono">
             <Link
@@ -73,9 +73,8 @@ export default async function HomePage() {
               return (
                 <div
                   key={project.id}
-                  className={`grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center ${
-                    isEven ? "" : "md:flex-row-reverse"
-                  }`}
+                  className={`grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center ${isEven ? "" : "md:flex-row-reverse"
+                    }`}
                 >
                   {/* Text Details */}
                   <div className={`space-y-6 md:col-span-5 ${isEven ? "md:order-1" : "md:order-2"}`}>
@@ -124,9 +123,8 @@ export default async function HomePage() {
                   </div>
 
                   {/* Visual Space (Editorial Mockup / Image Placeholder) */}
-                  <div className={`relative h-64 md:h-96 w-full bg-card-paper border border-border-paper md:col-span-7 flex items-center justify-center overflow-hidden ${
-                    isEven ? "md:order-2" : "md:order-1"
-                  }`}>
+                  <div className={`relative h-64 md:h-96 w-full bg-card-paper border border-border-paper md:col-span-7 flex items-center justify-center overflow-hidden ${isEven ? "md:order-2" : "md:order-1"
+                    }`}>
                     {project.coverImage ? (
                       // eslint-disable-next-line @next/next/no-img-element
                       <img
@@ -148,52 +146,135 @@ export default async function HomePage() {
         )}
       </section>
 
-      {/* 3. Essays & Literature Section */}
-      <section className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 border-t border-border-paper pt-16">
-        {/* Left Column: Heading & Context */}
-        <div className="md:col-span-4 space-y-4">
-          <h2 className="font-serif text-3xl font-bold tracking-tight text-fg-ink">
-            Technical <br className="hidden md:inline" />
-            Essays
-          </h2>
-          <p className="text-xs text-muted-paper font-sans leading-relaxed max-w-xs">
-            Deep-dives into database query optimizations, distributed consensus mechanics, and microservice integration design patterns.
-          </p>
-          <Link href="/blog" className="meta-mono hover:text-copper inline-flex items-center gap-1.5 pt-2 transition-colors">
-            All Articles <ArrowUpRight size={12} />
+      {/* 3. Essays & Literature Section - High-Impact Editorial Grid */}
+      <section className="space-y-8 border-t border-border-paper pt-16">
+        {/* Section Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border-paper pb-6">
+          <div className="space-y-2">
+            <div className="flex items-center gap-2">
+              <span className="font-mono text-xs text-copper uppercase tracking-wider font-semibold">
+                Publications & Monologues
+              </span>
+              <span className="h-px bg-border-paper w-12" />
+            </div>
+            <h2 className="font-serif text-3xl md:text-4xl font-bold tracking-tight text-fg-ink">
+              Technical Essays & Deep-Dives
+            </h2>
+            <p className="text-xs text-muted-paper font-sans max-w-xl leading-relaxed">
+              In-depth analyses on distributed system mechanics, backend scalability patterns, caching strategies, and robust architecture blueprints.
+            </p>
+          </div>
+          <Link
+            href="/blog"
+            className="meta-mono text-xs text-copper hover:text-copper-hover inline-flex items-center gap-1.5 transition-colors self-start md:self-auto shrink-0"
+          >
+            All Essays <ArrowUpRight size={14} />
           </Link>
         </div>
 
-        {/* Right Column: Listed articles with clean editorial border lines */}
-        <div className="md:col-span-8 divide-y divide-border-paper border-t border-b border-border-paper">
-          {posts.length === 0 ? (
-            <p className="py-6 text-sm text-muted-paper italic">No publications released yet.</p>
-          ) : (
-            posts.map((post) => (
-              <article key={post.id} className="py-8 group">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-4 items-baseline">
-                  {/* Date */}
-                  <span className="font-mono text-xs text-muted-paper">
-                    {new Date(post.createdAt).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "short",
-                      day: "numeric",
-                    })}
-                  </span>
-                  {/* Title & Category */}
-                  <div className="md:col-span-3 space-y-2">
-                    <span className="font-mono text-[10px] text-copper tracking-wider uppercase">
-                      {post.category.name}
-                    </span>
-                    <h3 className="font-serif text-lg md:text-xl font-bold text-fg-ink group-hover:text-copper transition-colors">
-                      <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+        {/* Post Grid */}
+        {posts.length === 0 ? (
+          <div className="text-center py-16 border border-dashed border-border-paper">
+            <p className="font-serif italic text-sm text-muted-paper">No technical essays published yet.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {posts.map((post) => {
+              // Calculate reading time
+              const wordCount = post.content ? post.content.replace(/<[^>]*>/g, "").split(/\s+/).length : 0;
+              const readTime = Math.max(1, Math.round(wordCount / 200));
+              const excerpt = post.content
+                ? post.content.replace(/<[^>]*>/g, "").trim().substring(0, 140) + "..."
+                : "";
+
+              return (
+                <article
+                  key={post.id}
+                  className="group relative flex flex-col bg-card-paper border border-border-paper overflow-hidden hover:border-copper/60 transition-all duration-300"
+                >
+                  {/* Cover Image or Editorial Graphic */}
+                  <Link href={`/blog/${post.slug}`} className="block relative aspect-[16/10] w-full bg-bg-paper border-b border-border-paper overflow-hidden">
+                    {post.coverImage ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={post.coverImage}
+                        alt={post.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex flex-col items-center justify-center p-6 bg-gradient-to-br from-card-paper via-bg-paper to-card-paper">
+                        <span className="font-mono text-xs text-copper tracking-widest uppercase mb-1">
+                          {post.category.name}
+                        </span>
+                        <span className="font-serif italic text-sm text-muted-paper">Technical Monograph</span>
+                      </div>
+                    )}
+                    {/* Category Overlay Tag */}
+                    <div className="absolute top-3 left-3">
+                      <span className="font-mono text-[9px] uppercase tracking-wider bg-bg-paper/90 backdrop-blur-xs text-copper border border-border-paper px-2 py-0.5 font-semibold">
+                        {post.category.name}
+                      </span>
+                    </div>
+                  </Link>
+
+                  {/* Content Container */}
+                  <div className="p-6 flex flex-col flex-grow space-y-4">
+                    {/* Meta Row: Date & Reading Time */}
+                    <div className="flex items-center justify-between text-[11px] font-mono text-muted-paper">
+                      <span>
+                        {new Date(post.createdAt).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </span>
+                      <span className="text-copper">{readTime} min read</span>
+                    </div>
+
+                    {/* Title */}
+                    <h3 className="font-serif text-xl font-bold leading-snug text-fg-ink group-hover:text-copper transition-colors line-clamp-2">
+                      <Link href={`/blog/${post.slug}`}>
+                        {post.title}
+                      </Link>
                     </h3>
+
+                    {/* Excerpt */}
+                    {excerpt && (
+                      <p className="text-xs text-muted-paper font-sans leading-relaxed line-clamp-2 flex-grow">
+                        {excerpt}
+                      </p>
+                    )}
+
+                    {/* Tags */}
+                    {post.tags && post.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {post.tags.slice(0, 2).map((tag) => (
+                          <span
+                            key={tag.slug}
+                            className="font-mono text-[9px] text-muted-paper bg-bg-paper border border-border-paper px-2 py-0.5"
+                          >
+                            #{tag.name}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Card Footer Link */}
+                    <div className="pt-4 border-t border-border-paper/60 mt-auto">
+                      <Link
+                        href={`/blog/${post.slug}`}
+                        className="font-mono text-xs text-copper flex items-center justify-between group-hover:text-copper-hover transition-colors"
+                      >
+                        <span>Read Essay</span>
+                        <MoveRight size={14} className="group-hover:translate-x-1.5 transition-transform duration-300" />
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              </article>
-            ))
-          )}
-        </div>
+                </article>
+              );
+            })}
+          </div>
+        )}
       </section>
 
       {/* 4. Books and Courses - Split Layout */}

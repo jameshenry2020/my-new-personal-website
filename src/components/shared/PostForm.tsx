@@ -4,22 +4,28 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { postSchema } from "@/validators";
+import { z } from "zod";
 import { createPost, updatePost } from "@/actions/admin";
 import { RichTextEditor } from "@/components/shared/RichTextEditor";
+import { ImageUpload } from "@/components/shared/ImageUpload";
 import { AlertCircle, Loader2, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Post } from "@prisma/client";
 
-type PostFormValues = {
-  title: string;
-  slug: string;
-  content: string;
-  coverImage: string;
-  published: boolean;
-  categoryId: string;
-  tagsString: string; // Used to collect tags in client
-};
+const postFormSchema = z.object({
+  title: z.string().min(3, "Title must be at least 3 characters"),
+  slug: z
+    .string()
+    .min(3, "Slug must be at least 3 characters")
+    .regex(/^[a-z0-9-]+$/, "Slug must contain only lowercase letters, numbers, and dashes"),
+  content: z.string().min(10, "Content must be at least 10 characters"),
+  coverImage: z.string().optional().or(z.literal("")),
+  published: z.boolean().default(false),
+  categoryId: z.string().min(1, "Please select a valid category"),
+  tagsString: z.string().optional().or(z.literal("")),
+});
+
+type PostFormValues = z.infer<typeof postFormSchema>;
 
 interface PostFormProps {
   initialData?: (Post & { tags?: { name: string }[] }) | null;
@@ -37,13 +43,10 @@ export function PostForm({ initialData, categories }: PostFormProps) {
     handleSubmit,
     control,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<PostFormValues>({
-    resolver: zodResolver(
-      postSchema.extend({
-        tags: postSchema.shape.tags, // standard validation
-      })
-    ),
+    resolver: zodResolver(postFormSchema),
     defaultValues: {
       title: initialData?.title || "",
       slug: initialData?.slug || "",
@@ -60,7 +63,7 @@ export function PostForm({ initialData, categories }: PostFormProps) {
     setError(null);
 
     // Parse tag string to array of strings
-    const tagsArray = data.tagsString
+    const tagsArray = (data.tagsString || "")
       .split(",")
       .map((tag) => tag.trim())
       .filter((tag) => tag.length > 0);
@@ -194,16 +197,14 @@ export function PostForm({ initialData, categories }: PostFormProps) {
           </div>
         </div>
 
-        {/* Cover Image */}
-        <div className="space-y-1.5">
-          <label className="meta-mono block">Cover Image URL</label>
-          <input
-            type="text"
-            {...register("coverImage")}
-            className="w-full bg-card-paper border border-border-paper px-4 py-2.5 text-xs font-mono rounded-none focus:outline-none focus:border-copper text-fg-ink"
-            placeholder="https://images.unsplash.com/... or Cloudinary URL"
-          />
-        </div>
+        {/* Cover Image Upload */}
+        <ImageUpload
+          value={watch("coverImage")}
+          onChange={(url) => setValue("coverImage", url, { shouldValidate: true })}
+          disabled={isPending}
+          folder="portfolio/blog"
+          label="Essay Cover Image"
+        />
 
         {/* Content */}
         <div className="space-y-1.5">

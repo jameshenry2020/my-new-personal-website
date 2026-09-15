@@ -11,7 +11,7 @@ export function Footer() {
           <div className="space-y-2">
             <span className="font-serif font-bold text-fg-ink">Henry A.</span>
             <p className="text-xs text-muted-paper max-w-xs font-sans leading-relaxed">
-              Principal Systems Architect & Software Engineer. Building production-grade distributed systems and technical literature.
+              Principal Systems Architect & Software Engineer. Building production-grade distributed systems and technical trainer.
             </p>
             <p className="text-[11px] font-mono text-muted-paper">
               © {currentYear} Henry A. All rights reserved.
@@ -31,7 +31,7 @@ export function Footer() {
             <span className="meta-mono block">Network</span>
             <div className="grid grid-cols-2 gap-2 text-xs font-sans">
               <a
-                href="https://github.com"
+                href="https://github.com/jameshenry2020"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-paper hover:text-copper transition-colors"
@@ -39,7 +39,7 @@ export function Footer() {
                 GitHub
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/agbonlahorhenry/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-paper hover:text-copper transition-colors"
@@ -47,7 +47,7 @@ export function Footer() {
                 LinkedIn
               </a>
               <a
-                href="https://twitter.com"
+                href="https://x.com/HeryDevAgb"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-paper hover:text-copper transition-colors"
@@ -55,7 +55,7 @@ export function Footer() {
                 X / Twitter
               </a>
               <a
-                href="https://youtube.com"
+                href="https://www.youtube.com/@henrydev01"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-muted-paper hover:text-copper transition-colors"
@@ -71,7 +71,7 @@ export function Footer() {
           <div className="flex items-center gap-2">
             <span className="inline-block w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-[10px] font-mono text-muted-paper uppercase tracking-wider">
-              Available for systems design & consulting
+              Available for software development, Mobile apps, Web apps, AI Agents & training
             </span>
           </div>
           <div className="text-[10px] font-mono text-muted-paper uppercase tracking-wider">

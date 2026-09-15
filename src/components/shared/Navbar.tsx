@@ -4,7 +4,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTheme } from "next-themes";
-import { Moon, Sun, Menu, X } from "lucide-react";
+import { useSession } from "next-auth/react";
+import { Moon, Sun, Menu, X, Shield } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const NAV_ITEMS = [
@@ -19,8 +20,11 @@ const NAV_ITEMS = [
 export function Navbar() {
   const pathname = usePathname();
   const { theme, setTheme } = useTheme();
+  const { data: session } = useSession();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
+
+  const isAdmin = !!session?.user;
 
   React.useEffect(() => {
     setMounted(true);
@@ -83,12 +87,17 @@ export function Navbar() {
           ))}
           <div className="pl-4 border-l border-border-paper flex items-center gap-4">
             {themeToggle}
-            <Link
-              href="/admin"
-              className="meta-mono text-[10px] border border-copper px-3 py-1.5 text-copper hover:bg-copper hover:text-bg-paper transition-colors"
-            >
-              Console
-            </Link>
+            {/* Render Console button ONLY when authenticated as Admin */}
+            {isAdmin && (
+              <Link
+                href="/admin"
+                className="meta-mono text-[10px] border border-copper px-3 py-1.5 text-copper hover:bg-copper hover:text-bg-paper transition-all flex items-center gap-1.5"
+                title="Admin Studio Console"
+              >
+                <Shield size={11} className="text-copper group-hover:text-inherit" />
+                <span>Console</span>
+              </Link>
+            )}
           </div>
         </nav>
 
@@ -124,15 +133,20 @@ export function Navbar() {
               </Link>
             ))}
           </nav>
-          <div className="pt-4 border-t border-border-paper flex justify-between items-center">
-            <Link
-              href="/admin"
-              onClick={() => setMobileMenuOpen(false)}
-              className="meta-mono text-xs border border-copper px-4 py-2 text-copper w-full text-center hover:bg-copper hover:text-bg-paper"
-            >
-              Admin Dashboard
-            </Link>
-          </div>
+
+          {/* Render Admin Dashboard link in Mobile Drawer ONLY when authenticated */}
+          {isAdmin && (
+            <div className="pt-4 border-t border-border-paper flex justify-between items-center">
+              <Link
+                href="/admin"
+                onClick={() => setMobileMenuOpen(false)}
+                className="meta-mono text-xs border border-copper px-4 py-2 text-copper w-full text-center hover:bg-copper hover:text-bg-paper flex items-center justify-center gap-2"
+              >
+                <Shield size={13} />
+                <span>Admin Dashboard</span>
+              </Link>
+            </div>
+          )}
         </div>
       )}
     </header>

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Lora, JetBrains_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/shared/ThemeProvider";
+import { AuthProvider } from "@/components/providers/AuthProvider";
+import { AdminShortcutListener } from "@/components/shared/AdminShortcutListener";
 import { Navbar } from "@/components/shared/Navbar";
 import { Footer } from "@/components/shared/Footer";
 import "./globals.css";
@@ -76,13 +78,16 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col bg-bg-paper text-fg-ink font-sans transition-colors duration-200">
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Navbar />
-          <main className="flex-grow w-full max-w-7xl mx-auto px-6 py-8 md:py-16">
-            {children}
-          </main>
-          <Footer />
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            <AdminShortcutListener />
+            <Navbar />
+            <main className="flex-grow w-full max-w-7xl mx-auto px-6 py-8 md:py-16">
+              {children}
+            </main>
+            <Footer />
+          </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );
