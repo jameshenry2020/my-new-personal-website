@@ -25,11 +25,51 @@ async function main() {
     data: { name: "Fintech Architecture", slug: "fintech-architecture" },
   });
 
+  const categoryML = await prisma.category.create({
+    data: { name: "Machine Learning", slug: "machine-learning" },
+  });
+  const categoryAE = await prisma.category.create({
+    data: { name: "AI Engineering", slug: "ai-engineering" },
+  });
+
+  const categorySD = await prisma.category.create({
+    data: { name: "System Design", slug: "system-design" },
+  });
+
+  const categoryCC = await prisma.category.create({
+    data: { name: "Cloud Computing", slug: "cloud-computing" },
+  });
+
+
+
   // Create Tags
   const tagKafka = await prisma.tag.create({ data: { name: "Kafka", slug: "kafka" } });
   const tagRust = await prisma.tag.create({ data: { name: "Rust", slug: "rust" } });
   const tagPG = await prisma.tag.create({ data: { name: "PostgreSQL", slug: "postgresql" } });
   const tagGo = await prisma.tag.create({ data: { name: "Go Lang", slug: "go-lang" } });
+  const tagPython = await prisma.tag.create({ data: { name: "Python", slug: "python" } });
+  const tagAI = await prisma.tag.create({ data: { name: "AI", slug: "ai" } });
+  const tagLLM = await prisma.tag.create({ data: { name: "LLM", slug: "llm" } });
+  const tagCloud = await prisma.tag.create({ data: { name: "Cloud", slug: "cloud" } });
+  const tagSD = await prisma.tag.create({ data: { name: "System Design", slug: "system-design" } });
+  const tagArch = await prisma.tag.create({ data: { name: "Architecture", slug: "architecture" } });
+  const tagML = await prisma.tag.create({ data: { name: "Machine Learning", slug: "machine-learning" } });
+  const tagAWS = await prisma.tag.create({ data: { name: "AWS", slug: "aws" } });
+  const tagGCP = await prisma.tag.create({ data: { name: "GCP", slug: "gcp" } });
+  const tagAzure = await prisma.tag.create({ data: { name: "Azure", slug: "azure" } });
+  const tagKubernetes = await prisma.tag.create({ data: { name: "Kubernetes", slug: "kubernetes" } });
+  const tagDocker = await prisma.tag.create({ data: { name: "Docker", slug: "docker" } });
+  const tagNode = await prisma.tag.create({ data: { name: "Node.js", slug: "node-js" } });
+  const tagReact = await prisma.tag.create({ data: { name: "React", slug: "react" } });
+  const tagNext = await prisma.tag.create({ data: { name: "Nest.js", slug: "nest-js" } });
+  const tagTypeScript = await prisma.tag.create({ data: { name: "TypeScript", slug: "typescript" } });
+  const tagFintech = await prisma.tag.create({ data: { name: "Fintech", slug: "fintech" } });
+  const tagPayment = await prisma.tag.create({ data: { name: "Payment", slug: "payment" } });
+  const tagBlockchain = await prisma.tag.create({ data: { name: "Blockchain", slug: "blockchain" } });
+  const tagDApp = await prisma.tag.create({ data: { name: "DApp", slug: "dapp" } });
+  const backEnd = await prisma.tag.create({ data: { name: "Back-End", slug: "back-end" } });
+
+
 
   // Create Posts
   await prisma.post.create({

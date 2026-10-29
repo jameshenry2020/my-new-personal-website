@@ -1,6 +1,7 @@
 import React from "react";
 import { notFound } from "next/navigation";
 import { db } from "@/lib/db";
+import { syncAndGetCategories } from "@/services/db.service";
 import { PostForm } from "@/components/shared/PostForm";
 
 export const dynamic = "force-dynamic";
@@ -20,7 +21,7 @@ export default async function AdminEditPostPage({ params }: AdminEditPostPagePro
       where: { id },
       include: { tags: true },
     }),
-    db.category.findMany(),
+    syncAndGetCategories(),
   ]);
 
   if (!post) {

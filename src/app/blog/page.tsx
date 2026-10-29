@@ -47,9 +47,9 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
       <section className="border-b border-border-paper pb-8 space-y-4">
         <div className="flex justify-between items-baseline">
           <div>
-            <span className="meta-mono">Technical Literature</span>
+            <span className="meta-mono">Blogs Articles</span>
             <h1 className="font-serif text-4xl md:text-5xl font-extrabold tracking-tight text-fg-ink mt-2">
-              The Engineering Essays
+              Backend Engineering, System Design & Machine Learning Articles
             </h1>
           </div>
           <span className="font-mono text-xs text-muted-paper">
@@ -138,9 +138,8 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
         <section className="flex justify-between items-center border-t border-border-paper pt-8 text-xs font-mono">
           <Link
             href={currentPage > 1 ? getPageUrl(currentPage - 1) : "#"}
-            className={`flex items-center gap-2 border border-border-paper px-4 py-2 hover:bg-card-paper transition-colors ${
-              currentPage <= 1 ? "opacity-40 cursor-not-allowed pointer-events-none" : ""
-            }`}
+            className={`flex items-center gap-2 border border-border-paper px-4 py-2 hover:bg-card-paper transition-colors ${currentPage <= 1 ? "opacity-40 cursor-not-allowed pointer-events-none" : ""
+              }`}
           >
             <ArrowLeft size={14} /> Previous Page
           </Link>
@@ -149,9 +148,8 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
           </span>
           <Link
             href={currentPage < pages ? getPageUrl(currentPage + 1) : "#"}
-            className={`flex items-center gap-2 border border-border-paper px-4 py-2 hover:bg-card-paper transition-colors ${
-              currentPage >= pages ? "opacity-40 cursor-not-allowed pointer-events-none" : ""
-            }`}
+            className={`flex items-center gap-2 border border-border-paper px-4 py-2 hover:bg-card-paper transition-colors ${currentPage >= pages ? "opacity-40 cursor-not-allowed pointer-events-none" : ""
+              }`}
           >
             Next Page <ArrowRight size={14} />
           </Link>

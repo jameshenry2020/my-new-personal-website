@@ -83,6 +83,38 @@ export async function getPostBySlug(slug: string) {
   });
 }
 
+export const DEFAULT_CATEGORIES = [
+  { name: "Distributed Systems", slug: "distributed-systems" },
+  { name: "Database Engineering", slug: "database-engineering" },
+  { name: "Fintech Architecture", slug: "fintech-architecture" },
+  { name: "System Design", slug: "system-design" },
+  { name: "Mobile Development", slug: "mobile-development" },
+  { name: "AI Systems", slug: "ai-systems" },
+  { name: "AI Application", slug: "ai-application" },
+  { name: "AI Infrastructure", slug: "ai-infrastructure" },
+  { name: "Backend Engineering", slug: "backend-engineering" },
+  { name: "SaaS", slug: "saas" },
+  { name: "E-commerce", slug: "e-commerce" },
+  { name: "Logistics", slug: "logistics" },
+  { name: "Cloud Architecture", slug: "cloud-architecture" },
+  { name: "DevOps", slug: "devops" },
+];
+
+export async function syncAndGetCategories() {
+  try {
+    await db.category.createMany({
+      data: DEFAULT_CATEGORIES,
+      skipDuplicates: true,
+    });
+  } catch (err) {
+    console.warn("Category sync notice:", err);
+  }
+
+  return db.category.findMany({
+    orderBy: { name: "asc" },
+  });
+}
+
 export async function getCategories() {
   return db.category.findMany({
     include: {
