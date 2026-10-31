@@ -2,7 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getPostBySlug, getRelatedPosts } from "@/services/db.service";
-import { ArrowLeft, Twitter, Linkedin, Link as LinkIcon } from "lucide-react";
+import { CopyButton } from "@/components/shared/CopyButton";
+import { ArrowLeft, Twitter, Linkedin } from "lucide-react";
 
 export const revalidate = 60; // Cache blog detail pages for 1 minute
 
@@ -15,26 +16,37 @@ interface BlogPostPageProps {
 // Generate dynamic metadata for SEO
 export async function generateMetadata({ params }: BlogPostPageProps) {
   const resolvedParams = await params;
-  const post = await getPostBySlug(resolvedParams.slug);
-  if (!post) return {};
+  const rawSlug = resolvedParams?.slug || "";
+  const slug = decodeURIComponent(rawSlug);
+  const post = (await getPostBySlug(slug)) || (await getPostBySlug(rawSlug));
+  if (!post) {
+    return {
+      title: "Monograph Not Found | Henry A.",
+      description: "The requested essay or monograph could not be found.",
+    };
+  }
+
+  const excerpt = (post.content || "").replace(/<[^>]*>/g, "").substring(0, 160).trim() + "...";
 
   return {
-    title: post.title,
-    description: post.content.replace(/<[^>]*>/g, "").substring(0, 160) + "...",
+    title: `${post.title} | Henry A.`,
+    description: excerpt,
     openGraph: {
       title: post.title,
-      description: post.content.replace(/<[^>]*>/g, "").substring(0, 160) + "...",
+      description: excerpt,
       url: `https://henrydev.online/blog/${post.slug}`,
       type: "article",
-      publishedTime: post.createdAt.toISOString(),
-      modifiedTime: post.updatedAt.toISOString(),
+      publishedTime: post.createdAt ? new Date(post.createdAt).toISOString() : undefined,
+      modifiedTime: post.updatedAt ? new Date(post.updatedAt).toISOString() : undefined,
     },
   };
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const resolvedParams = await params;
-  const post = await getPostBySlug(resolvedParams.slug);
+  const rawSlug = resolvedParams?.slug || "";
+  const slug = decodeURIComponent(rawSlug);
+  const post = (await getPostBySlug(slug)) || (await getPostBySlug(rawSlug));
 
   if (!post) {
     notFound();
@@ -44,30 +56,27 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const relatedPosts = await getRelatedPosts(post.id, post.categoryId, 3).catch(() => []);
 
   // Compute reading time
-  const wordCount = post.content.replace(/<[^>]*>/g, "").split(/\s+/).length;
+  const textContent = (post.content || "").replace(/<[^>]*>/g, "").trim();
+  const wordCount = textContent ? textContent.split(/\s+/).length : 0;
   const readTime = Math.max(1, Math.round(wordCount / 200));
 
-  // Extract headings for Table of Contents (TOC)
-  const headingRegex = /<(h2|h3)[^>]*>(.*?)<\/\1>/g;
+  // Extract headings for Table of Contents (TOC) and inject unique IDs
+  const headingRegex = /<(h2|h3)([^>]*)>(.*?)<\/\1>/gi;
   const headings: { text: string; id: string; level: string }[] = [];
-  let match;
-  const rawContent = post.content;
-
-  // Let's inject ids into the headings dynamically so they can be linked
-  let contentWithIds = rawContent;
   let index = 0;
-  while ((match = headingRegex.exec(rawContent)) !== null) {
-    const level = match[1];
-    const text = match[2].replace(/<[^>]*>/g, ""); // strip inner tags if any
-    const id = `heading-${index}`;
-    headings.push({ text, id, level });
 
-    // Replace first occurrence of this tag with one containing the id
-    const originalTag = match[0];
-    const newTag = `<${level} id="${id}">${match[2]}</${level}>`;
-    contentWithIds = contentWithIds.replace(originalTag, newTag);
-    index++;
-  }
+  const contentWithIds = (post.content || "").replace(
+    headingRegex,
+    (fullMatch, tag, attrs, innerText) => {
+      const level = tag.toLowerCase();
+      const text = innerText.replace(/<[^>]*>/g, "").trim();
+      const id = `heading-${index++}`;
+      headings.push({ text, id, level });
+
+      const cleanedAttrs = attrs.replace(/\s*id=["'][^"']*["']/i, "");
+      return `<${level} id="${id}"${cleanedAttrs}>${innerText}</${level}>`;
+    }
+  );
 
   const shareUrl = `https://henrydev.online/blog/${post.slug}`;
   const shareTitle = encodeURIComponent(post.title);
@@ -88,7 +97,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <header className="border-b border-border-paper pb-8 space-y-6">
         <div className="flex items-center gap-3">
           <span className="font-mono text-xs text-copper tracking-wider uppercase font-semibold">
-            {post.category.name}
+            {post.category?.name || "General"}
           </span>
           <span className="h-px bg-border-paper w-12" />
           <span className="font-mono text-xs text-muted-paper">{readTime} Min Read</span>
@@ -98,7 +107,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         </h1>
         <div className="flex justify-between items-center text-xs font-mono text-muted-paper">
           <span>
-            Published {new Date(post.createdAt).toLocaleDateString("en-US", {
+            Published{" "}
+            {new Date(post.createdAt).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
               day: "numeric",
@@ -135,7 +145,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             <span className="meta-mono block">Share Coordinate</span>
             <div className="flex items-center gap-4 text-muted-paper">
               <a
-                href={`https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`}
+                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl)}&text=${shareTitle}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-copper transition-colors"
@@ -144,7 +154,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 <Twitter size={16} />
               </a>
               <a
-                href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="hover:text-copper transition-colors"
@@ -152,16 +162,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               >
                 <Linkedin size={16} />
               </a>
-              <button
-                onClick={() => {
-                  navigator.clipboard.writeText(shareUrl);
-                  alert("Link copied to clipboard!");
-                }}
-                className="hover:text-copper transition-colors"
-                title="Copy Link"
-              >
-                <LinkIcon size={16} />
-              </button>
+              <CopyButton url={shareUrl} />
             </div>
           </div>
         </aside>
@@ -181,7 +182,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 {relatedPosts.map((rPost) => (
                   <div key={rPost.id} className="space-y-2">
                     <span className="font-mono text-[9px] text-copper uppercase">
-                      {rPost.category.name}
+                      {rPost.category?.name || "General"}
                     </span>
                     <h4 className="font-serif text-sm font-semibold hover:text-copper transition-colors">
                       <Link href={`/blog/${rPost.slug}`}>{rPost.title}</Link>
